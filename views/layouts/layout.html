@@ -1,49 +1,26 @@
 {{define "layout"}}
 
 <!DOCTYPE html>
-<html class="pc" lang="ja" xmlns:fb="http://ogp.me/ns/fb#" xmlns:og="http://ogp.me/ns#">
+<html class="pc" lang="ja">
 <head>
-    <link href="http://fonts.googleapis.com/css?family=Signika:700,300,400,600" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="../../assets/stylesheets/application.css">
+    <link rel="stylesheet" href="/static/css/application.css">
+    <title>映画レビューサイト</title>
     <meta charset="utf-8">
-    <title>映画レビューサイト</title><meta name="csrf-param" content="authenticity_token"><meta name="csrf-token" content="+4FrhiaYB86UDU13Q+JWm8sIzszn89D+cLVvaqI7ZtA03RrDOAPJRYKGSCsqvfGDzwYShT6U2JQLmsc5WsNFzQ==">
-</head>
+    </head>
 <body class="yj950-2">
 <div id="wrapper">
-    <div id="yjContentsHeader">
-        <nav class="globalnav">
-            <div class="globalnav__menu">
-                <ul class="gmenu">
-                    <li class="logo" style="float: left">
-                        <a href="/">gomooovi</a>
-                    </li>
-                    <li class="entry_button" style="float: right">
-                        <a rel="nofollow" data-method="delete" href="/users/sign_out">サインアウト</a>
-                    </li>
-                    <li class="entry_button" style="float: right">
-                        <a href="/users/2">マイページ</a>
-                    </li>
-                    <li class="entry_button" style="float: right">
-                        <a href="/products/search">投稿する</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+
+    {{ template "navbar" }}}
+
     <div class="bgcolor-white pt1em pb1em" id="contents">
         <div id="main_cnt_wrapper">
             <div id="yjContentsBody">
                 <div class="yjContainer">
+
+                    {{ template "content" }}
+
+
                     <div id="yjSub">
-
-
-
-
-
-
-
-
-
                         <aside class="section">
                             <h4 class="text-small hr-bottom--thin no-space-bottom">
                                 <i class="icon-crown color-gray-light"></i>投稿ランキング
@@ -142,6 +119,7 @@
                             </ul>
                         </aside>
                     </div>
+
                 </div>
             </div>
         </div>

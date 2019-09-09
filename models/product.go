@@ -44,5 +44,5 @@ func GetProducts(limit int)(*Products, error){
 		return nil, err
 	}
 
-	return &products
+	return &products, nil
 }

@@ -27,7 +27,7 @@ func loadConfig(){
 		log.Fatalln(err)
 	}
 	decorder := json.NewDecoder(file)
-	var config Configuration
+
 	err = decorder.Decode(&config)
 	if err != nil{
 		log.Fatalln(err)

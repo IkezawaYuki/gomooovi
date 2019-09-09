@@ -8,13 +8,14 @@ import (
 func main(){
 	mux := http.NewServeMux()
 
-	files := http.FileServer(http.Dir("assets"))
+	files := http.FileServer(http.Dir(config.Static))
 	mux.Handle("/static/", http.StripPrefix("/static/", files))
 
 	mux.HandleFunc("/", routes.Index)
+	mux.HandleFunc("/products/search", routes.ProductSearch)
 
 	server := &http.Server{
-		Addr:  "127.0.0.1:8080",
+		Addr:  config.Address,
 		Handler:mux,
 	}
 
