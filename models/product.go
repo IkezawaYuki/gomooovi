@@ -24,7 +24,7 @@ type Products struct {
 func GetProducts(limit int)(*Products, error){
 	cmd := fmt.Sprintf(`SELECT id, title, image_url, created_at, update_at, director, detail, open_date 
 								FROM products LIMIT %v`, limit)
-	rows, err := DbConnection.Query(cmd)
+	rows, err := Db.Query(cmd)
 	if err != nil{
 		log.Println(err)
 		return nil, err

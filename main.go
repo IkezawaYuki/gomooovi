@@ -3,9 +3,12 @@ package main
 import (
 	"gomooovi/routes"
 	"net/http"
+
+	_ "gomooovi/models"
 )
 
 func main(){
+
 	mux := http.NewServeMux()
 
 	files := http.FileServer(http.Dir(config.Static))
