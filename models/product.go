@@ -7,7 +7,7 @@ import (
 )
 
 type Product struct {
-	ID        int       `json:"id"`
+	Id        int       `json:"id"`
 	Title     string    `json:"title"`
 	ImageUrl  string    `json:"image_url"`
 	CreatedAt time.Time `json:"created_at"`
@@ -34,7 +34,7 @@ func GetProducts(limit int)(*Products, error){
 	var products Products
 	for rows.Next(){
 		var product Product
-		rows.Scan(&product.ID, &product.Title, &product.ImageUrl, &product.CreatedAt, &product.UpdatedAt, &product.Director,
+		rows.Scan(&product.Id, &product.Title, &product.ImageUrl, &product.CreatedAt, &product.UpdatedAt, &product.Director,
 			&product.Detail, &product.OpenDate)
 		products.Products = append(products.Products, product)
 	}

@@ -1,7 +1,9 @@
 package routes
 
 import (
+	"errors"
 	"fmt"
+	"gomooovi/models"
 	"html/template"
 	"net/http"
 )
@@ -36,4 +38,15 @@ func ProductSearch(w http.ResponseWriter, r *http.Request){
 		generateHTML(w, nil, "layouts/layout", "layouts/private.navbar", "products/search")
 	}
 
+}
+
+func session(w http.ResponseWriter, r *http.Request) (ses models.Session, err error) {
+	cookie, err := r.Cookie("_cookie")
+	if err == nil {
+		ses = models.Session{Uuid: cookie.Value}
+		if ok, _ := ses.Check(); !ok {
+			err = errors.New("invalid error")
+		}
+	}
+	return
 }
