@@ -23,7 +23,7 @@ type Session struct {
 }
 
 func (user *User) CreateSession() (session Session, err error) {
-	statement := "insert into sessions (uuid, email, user_id, created_at) values(?, ?, ?, ?) returning id, uuid, email, user_id, created_at"
+	statement := "insert into sessions_go (uuid, email, user_id, created_at) values(?, ?, ?, ?) returning id, uuid, email, user_id, created_at"
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		return
@@ -36,12 +36,12 @@ func (user *User) CreateSession() (session Session, err error) {
 
 func (user *User) Session() (session Session, err error) {
 	session = Session{}
-	err = Db.QueryRow("select id, uuid, email, user_id, created_at from users where user_id = ?", user.Uuid).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt)
+	err = Db.QueryRow("select id, uuid, email, user_id, created_at from users_go where user_id = ?", user.Uuid).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt)
 	return
 }
 
 func (session *Session) Check() (valid bool, err error) {
-	err = Db.QueryRow("select id, uuid, email, user_id, created_at from sessions where uuid = ?", session.Uuid).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt)
+	err = Db.QueryRow("select id, uuid, email, user_id, created_at from sessions_go where uuid = ?", session.Uuid).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt)
 	if err != nil {
 		valid = false
 		return
@@ -53,7 +53,7 @@ func (session *Session) Check() (valid bool, err error) {
 }
 
 func (session *Session) DeleteByUUID() (err error) {
-	statement := "delete from sessions where uuid = ?"
+	statement := "delete from sessions_go where uuid = ?"
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		fmt.Println("session is none")
@@ -63,7 +63,7 @@ func (session *Session) DeleteByUUID() (err error) {
 }
 
 func (user *User) Create() (err error) {
-	statement := "insert into users (uuid, email, password, nickname, created_at) values (?, ?, ?, ?, ?) returning id, uuid, created_at"
+	statement := "insert into users_go (uuid, email, password, nickname, created_at) values (?, ?, ?, ?, ?) returning id, uuid, created_at"
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		return
@@ -74,7 +74,7 @@ func (user *User) Create() (err error) {
 }
 
 func (user *User) Delete() (err error) {
-	statement := "Delete from users where id = ?"
+	statement := "Delete from users_go where id = ?"
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		return
@@ -85,7 +85,7 @@ func (user *User) Delete() (err error) {
 }
 
 func (user *User) Update() (err error) {
-	statement := "update users set nickname = ?, email = ? where id = ?"
+	statement := "update users_go set nickname = ?, email = ? where id = ?"
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		return
@@ -96,13 +96,13 @@ func (user *User) Update() (err error) {
 }
 
 func (user *User) DeleteAll() (err error) {
-	statement := "delete from users"
+	statement := "delete from users_go"
 	_, err = Db.Exec(statement)
 	return
 }
 
 func Users() (users []User, err error) {
-	statement := "select id, uuid, nickname, email, password, created_at from users"
+	statement := "select id, uuid, nickname, email, password, created_at from users_go"
 	rows, err := Db.Query(statement)
 	if err != nil {
 		return
@@ -120,32 +120,32 @@ func Users() (users []User, err error) {
 
 func UserByEmail(email string) (user User, err error) {
 	user = User{}
-	err = Db.QueryRow("select id, uuid, nickname, email, password, created_at from users where email = ?", email).
+	err = Db.QueryRow("select id, uuid, nickname, email, password, created_at from users_go where email = ?", email).
 		Scan(&user.Id, &user.Uuid, &user.Nickname, &user.Email, &user.Password, &user.CreatedAt)
 	return
 }
 
 func UserByUUID(uuid string) (user User, err error) {
 	user = User{}
-	err = Db.QueryRow("select id, uuid, nickname, email, password, created_at from users where uuid = ?", uuid).
+	err = Db.QueryRow("select id, uuid, nickname, email, password, created_at from users_go where uuid = ?", uuid).
 		Scan(&user.Id, &user.Uuid, &user.Nickname, &user.Email, &user.Password, &user.CreatedAt)
 	return
 }
 
 func (session *Session) User() (user User, err error) {
 	user = User{}
-	Db.QueryRow("select id, uuid, nickname, email, created_at from users where id = ?", session.UserId).Scan(&user.Id, &user.Uuid, &user.Nickname, &user.Email, &user.CreatedAt)
+	Db.QueryRow("select id, uuid, nickname, email, created_at from users_go where id = ?", session.UserId).Scan(&user.Id, &user.Uuid, &user.Nickname, &user.Email, &user.CreatedAt)
 	return
 }
 
 func UserDeleteAll() (err error) {
-	statement := "delete from users"
+	statement := "delete from users_go"
 	_, err = Db.Exec(statement)
 	return
 }
 
 func SessionDeleteAll() (err error) {
-	statement := "delete from sessions"
+	statement := "delete from sessions_go"
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		return

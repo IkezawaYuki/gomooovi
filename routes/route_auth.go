@@ -8,7 +8,6 @@ import (
 )
 
 func Login(writer http.ResponseWriter, request *http.Request) {
-	fmt.Println("hello")
 	generateHTML(writer, nil, "auth/layout", "layouts/public.navbar", "auth/login")
 }
 
@@ -40,6 +39,23 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.Redirect(w, r, "/login", 302)
 	}
+}
+
+func SignupAccount(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("sign up")
+	err := r.ParseForm()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	user := models.User{
+		Nickname: r.PostFormValue("nickname"),
+		Email:    r.PostFormValue("email"),
+		Password: r.PostFormValue("password"),
+	}
+	if err = user.Create(); err != nil {
+		panic(err)
+	}
+	http.Redirect(w, r, "/login", 302)
 }
 
 func Logout(w http.ResponseWriter, r *http.Request) {

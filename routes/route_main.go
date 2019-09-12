@@ -6,10 +6,20 @@ import (
 	"gomooovi/models"
 	"html/template"
 	"net/http"
+	"sync"
 )
+
+type templateHandler struct {
+	once sync.Once
+	filenames []string
+	data interface{}
+	temple *template.Template
+}
+
 
 // HTMLの生成
 func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string){
+
 	var files []string
 	for _, file := range filenames{
 		files = append(files, fmt.Sprintf("views/%s.html", file))
@@ -37,7 +47,16 @@ func ProductSearch(w http.ResponseWriter, r *http.Request){
 	}else{
 		generateHTML(w, nil, "layouts/layout", "layouts/private.navbar", "products/search")
 	}
+}
 
+func ProductShow(w http.ResponseWriter, r *http.Request){
+
+	// todo セッション管理
+	if true{
+		generateHTML(w, nil, "layouts/layout", "layouts/public.navbar", "products/show")
+	}else{
+		generateHTML(w, nil, "layouts/layout", "layouts/private.navbar", "products/show")
+	}
 }
 
 func session(w http.ResponseWriter, r *http.Request) (ses models.Session, err error) {

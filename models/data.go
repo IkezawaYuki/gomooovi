@@ -12,7 +12,6 @@ import (
 var Db *sql.DB
 
 func init() {
-	fmt.Println("init!")
 	var err error
 	Db, err = sql.Open("mysql", "root:@/mooovi-exam3_development")
 	if err != nil {

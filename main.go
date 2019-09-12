@@ -3,6 +3,7 @@ package main
 import (
 	"gomooovi/routes"
 	"net/http"
+	"time"
 
 	_ "gomooovi/models"
 )
@@ -18,14 +19,21 @@ func main(){
 
 	mux.HandleFunc("/login", routes.Login)
 	mux.HandleFunc("/signup", routes.Signup)
+	mux.HandleFunc("/authenticate", routes.Authenticate)
+	mux.HandleFunc("/logout", routes.Logout)
+	mux.HandleFunc("/signup_account", routes.SignupAccount)
 
 	mux.HandleFunc("/products/search", routes.ProductSearch)
+	mux.HandleFunc("/products/show", routes.ProductShow)
 
 	mux.HandleFunc("/user/mypage", routes.Mypage)
 
 	server := &http.Server{
 		Addr:  config.Address,
 		Handler:mux,
+		ReadTimeout:    time.Duration(config.ReadTimeout * int64(time.Second)),
+		WriteTimeout:   time.Duration(config.WriteTimeout * int64(time.Second)),
+		MaxHeaderBytes: 1 << 20,
 	}
 
 	server.ListenAndServe()

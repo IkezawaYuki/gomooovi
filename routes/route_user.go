@@ -22,3 +22,4 @@ func Mypage(w http.ResponseWriter, r *http.Request){
 		}
 	}
 }
+
