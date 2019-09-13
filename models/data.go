@@ -13,11 +13,27 @@ var Db *sql.DB
 
 func init() {
 	var err error
-	Db, err = sql.Open("mysql", "root:@/mooovi-exam3_development")
+	Db, err = sql.Open("mysql", "root:@/mooovi-exam3_development?parseTime=true")
 	if err != nil {
 		log.Fatalln(err)
 	}
-	fmt.Println(Db)
+
+	rows, err := Db.Query("SELECT id, uuid, nickname, email, password, created_at FROM users_go")
+	defer rows.Close()
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for rows.Next() {
+		var person User //構造体Person型の変数personを定義
+		err := rows.Scan(&person.Id, &person.Uuid, &person.Nickname, &person.Email, &person.Password, &person.CreatedAt)
+
+		if err != nil {
+			panic(err.Error())
+		}
+		fmt.Println(person.Id, person.Nickname, person.CreatedAt) //結果　1 yamada 2 suzuki
+
+	}
 	return
 }
 

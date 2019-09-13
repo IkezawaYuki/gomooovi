@@ -63,13 +63,22 @@ func (session *Session) DeleteByUUID() (err error) {
 }
 
 func (user *User) Create() (err error) {
-	statement := "insert into users_go (uuid, email, password, nickname, created_at) values (?, ?, ?, ?, ?) returning id, uuid, created_at"
+	statement := "insert into users_go (uuid, email, password, nickname, created_at) values (?, ?, ?, ?, ?)"
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		return
 	}
 	defer stmt.Close()
-	err = stmt.QueryRow(createUUID(), user.Email, Encrypt(user.Password), user.Nickname, time.Now()).Scan(&user.Id, &user.Uuid, &user.CreatedAt)
+
+	//　todo
+	uuid := createUUID()
+	stmt.Exec(uuid, user.Email, Encrypt(user.Password), user.Nickname, time.Now())
+
+	user_mirror, err := UserByUUID(uuid)
+
+	user.Id = user_mirror.Id
+	user.CreatedAt = user_mirror.CreatedAt
+
 	return
 }
 
