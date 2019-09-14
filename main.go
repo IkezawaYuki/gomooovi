@@ -26,11 +26,13 @@ func main(){
 	//mux.Handle("/login", &routes.TemplateHandler{Filenames: []string{"auth/layout", "layouts/public.navbar", "auth/login"}})
 
 
-
 	mux.HandleFunc("/products/search", routes.ProductSearch)
 	mux.HandleFunc("/products/show", routes.ProductShow)
 
-	mux.HandleFunc("/user/mypage", routes.Mypage)
+	mux.HandleFunc("/reviews/new", routes.ReviewNew)
+	mux.HandleFunc("/reviews/create", routes.ReviewCreate)
+
+	mux.HandleFunc("/users/mypage", routes.Mypage)
 
 	server := &http.Server{
 		Addr:  config.Address,

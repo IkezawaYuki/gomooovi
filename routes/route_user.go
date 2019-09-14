@@ -2,24 +2,25 @@ package routes
 
 import (
 	"gomooovi/models"
-	"log"
 	"net/http"
+	"strconv"
 )
 
 func Mypage(w http.ResponseWriter, r *http.Request){
-	vals := r.URL.Query()
-	uuid := vals.Get("id")
-	user, err := models.UserByUUID(uuid)
+
+	ses, err := session(w, r)
 	if err != nil {
-		log.Fatalln(err)
+		http.Redirect(w, r, "/login", 302)
 	} else {
-		_, err := session(w, r)
-		if err != nil {
-			http.Redirect(w, r, "/login", 302)
-		} else {
-			// user に紐づくデータも一緒に渡したい。Mapにすれば良いらしい。
-			generateHTML(w, &user, "layouts/layout", "layouts/private.navbar", "users/show")
-		}
+		// user に紐づくデータも一緒に渡したい。Mapにすれば良いらしい。
+		user, _ := models.UserByID(strconv.Itoa(ses.UserId))
+
+
+
+		data := map[string]interface{}{"user":user, "dummy": "1"}
+
+		generateHTML(w, data, "users/mypage")
 	}
+
 }
 

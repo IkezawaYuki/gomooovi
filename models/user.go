@@ -153,6 +153,13 @@ func UserByUUID(uuid string) (user User, err error) {
 	return
 }
 
+func UserByID(id string) (user User, err error) {
+	user = User{}
+	err = Db.QueryRow("select id, uuid, nickname, email, password, created_at from users_go where id = ?", id).
+		Scan(&user.Id, &user.Uuid, &user.Nickname, &user.Email, &user.Password, &user.CreatedAt)
+	return
+}
+
 
 
 func (session *Session) User() (user User, err error) {

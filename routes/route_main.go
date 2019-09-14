@@ -19,13 +19,12 @@ func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string){
 	for _, file := range filenames{
 		files = append(files, fmt.Sprintf("views/%s.html", file))
 	}
-	fmt.Println(files)
 	templates := template.Must(template.ParseFiles(files...))
 	templates.ExecuteTemplate(w, "layout", data)
 }
 
 func Index(w http.ResponseWriter, r *http.Request){
-	products, err_ := models.GetProducts(20)
+	products, err_ := models.GetProductAll(20)
 	if err_ != nil{
 		fmt.Println(err_)
 	}
@@ -39,25 +38,7 @@ func Index(w http.ResponseWriter, r *http.Request){
 	}
 }
 
-func ProductSearch(w http.ResponseWriter, r *http.Request){
 
-	_, err := session(w, r)
-	if err != nil{
-		generateHTML(w, nil, "layouts/layout", "layouts/public.navbar", "products/search")
-	}else{
-		generateHTML(w, nil, "layouts/layout", "layouts/private.navbar", "products/search")
-	}
-}
-
-func ProductShow(w http.ResponseWriter, r *http.Request){
-
-	_, err := session(w, r)
-	if err != nil{
-		generateHTML(w, nil, "layouts/layout", "layouts/public.navbar", "products/show")
-	}else{
-		generateHTML(w, nil, "layouts/layout", "layouts/private.navbar", "products/show")
-	}
-}
 
 func session(w http.ResponseWriter, r *http.Request) (ses models.Session, err error) {
 	cookie, err := r.Cookie("_cookie")

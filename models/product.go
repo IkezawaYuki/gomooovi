@@ -18,7 +18,7 @@ type Product struct {
 }
 
 
-func GetProducts(limit int)(*[]Product, error){
+func GetProductAll(limit int)([]Product, error){
 	cmd := fmt.Sprintf(`SELECT id, title, image_url, created_at, updated_at, director, detail, open_date 
 								FROM products LIMIT %v`, limit)
 	rows, err := Db.Query(cmd)
@@ -41,5 +41,13 @@ func GetProducts(limit int)(*[]Product, error){
 		return nil, err
 	}
 
-	return &products, nil
+	return products, nil
+}
+
+func GetProduct(id string)(Product, error){
+	var product Product
+	cmd := `SELECT id, title, image_url, created_at, updated_at, director, detail, open_date FROM products WHERE id = ?`
+	err := Db.QueryRow(cmd, id).Scan(&product.Id, &product.Title, &product.ImageUrl, &product.CreatedAt, &product.UpdatedAt, &product.Director,
+		&product.Detail, &product.OpenDate)
+	return product, err
 }
