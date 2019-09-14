@@ -3,9 +3,51 @@ package routes
 import (
 	"fmt"
 	"gomooovi/models"
+	"html/template"
 	"log"
 	"net/http"
+	"sync"
 )
+
+type AuthHandler struct {
+	next http.Handler
+}
+
+type TemplateHandler struct {
+	once sync.Once
+	Filenames []string
+	templ *template.Template
+}
+
+func (t *TemplateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
+	var files []string
+
+	for _, file := range t.Filenames{
+		files = append(files, fmt.Sprintf("views/%s.html", file))
+	}
+
+	t.once.Do(func() {
+		t.templ = template.Must(template.ParseFiles(files...))
+	})
+	t.templ.Execute(w, nil)
+}
+
+
+func (h *AuthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
+	if _, err := r.Cookie("auth"); err == http.ErrNoCookie{
+		w.Header().Set("Location", "/login")
+		w.WriteHeader(http.StatusTemporaryRedirect)
+	}else if err != nil{
+		panic(err.Error())
+	}else{
+		h.next.ServeHTTP(w, r)
+	}
+}
+
+func MustAuth(handler http.Handler) http.Handler{
+	return &AuthHandler{next: handler}
+}
+
 
 func Login(writer http.ResponseWriter, request *http.Request) {
 	generateHTML(writer, nil, "auth/layout", "layouts/public.navbar", "auth/login")

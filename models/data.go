@@ -13,7 +13,7 @@ var Db *sql.DB
 
 func init() {
 	var err error
-	Db, err = sql.Open("mysql", "root:@/mooovi-exam3_development?parseTime=true")
+	Db, err = sql.Open("mysql", "root:@/mooovi_development?parseTime=true")
 	if err != nil {
 		log.Fatalln(err)
 	}

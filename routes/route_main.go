@@ -6,15 +6,10 @@ import (
 	"gomooovi/models"
 	"html/template"
 	"net/http"
-	"sync"
 )
 
-type templateHandler struct {
-	once sync.Once
-	filenames []string
-	data interface{}
-	temple *template.Template
-}
+
+
 
 
 // HTMLの生成
@@ -31,8 +26,8 @@ func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string){
 
 func Index(w http.ResponseWriter, r *http.Request){
 
-	// todo セッション管理
-	if true{
+	_, err := session(w, r)
+	if err != nil{
 		generateHTML(w, nil, "layouts/layout", "layouts/public.navbar", "products/index")
 	}else{
 		generateHTML(w, nil, "layouts/layout", "layouts/private.navbar", "products/index")
@@ -41,8 +36,8 @@ func Index(w http.ResponseWriter, r *http.Request){
 
 func ProductSearch(w http.ResponseWriter, r *http.Request){
 
-	// todo セッション管理
-	if true{
+	_, err := session(w, r)
+	if err != nil{
 		generateHTML(w, nil, "layouts/layout", "layouts/public.navbar", "products/search")
 	}else{
 		generateHTML(w, nil, "layouts/layout", "layouts/private.navbar", "products/search")
@@ -51,8 +46,8 @@ func ProductSearch(w http.ResponseWriter, r *http.Request){
 
 func ProductShow(w http.ResponseWriter, r *http.Request){
 
-	// todo セッション管理
-	if true{
+	_, err := session(w, r)
+	if err != nil{
 		generateHTML(w, nil, "layouts/layout", "layouts/public.navbar", "products/show")
 	}else{
 		generateHTML(w, nil, "layouts/layout", "layouts/private.navbar", "products/show")
@@ -63,6 +58,7 @@ func session(w http.ResponseWriter, r *http.Request) (ses models.Session, err er
 	cookie, err := r.Cookie("_cookie")
 	if err == nil {
 		ses = models.Session{Uuid: cookie.Value}
+		fmt.Println(ses)
 		if ok, _ := ses.Check(); !ok {
 			err = errors.New("invalid error")
 		}

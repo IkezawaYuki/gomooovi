@@ -23,16 +23,30 @@ type Session struct {
 }
 
 func (user *User) CreateSession() (session Session, err error) {
-	statement := "insert into sessions_go (uuid, email, user_id, created_at) values(?, ?, ?, ?) returning id, uuid, email, user_id, created_at"
+	statement := "insert into sessions_go (uuid, email, user_id, created_at) values(?, ?, ?, ?)"
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		return
 	}
 	defer stmt.Close()
 
-	err = stmt.QueryRow(createUUID(), user.Email, user.Id, time.Now()).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt)
+	uuid := createUUID()
+
+	stmt.Exec(uuid, user.Email, user.Id, time.Now())
+
+	session.Uuid = uuid
+	session.Email = user.Email
+	session.UserId = user.Id
+	session.CreatedAt = time.Now()
+
+	err = Db.QueryRow("SELECT LAST_INSERT_ID()").Scan(&session.Id)
+
+	fmt.Println(session)
+
 	return
 }
+
+//&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt
 
 func (user *User) Session() (session Session, err error) {
 	session = Session{}
@@ -42,8 +56,10 @@ func (user *User) Session() (session Session, err error) {
 
 func (session *Session) Check() (valid bool, err error) {
 	err = Db.QueryRow("select id, uuid, email, user_id, created_at from sessions_go where uuid = ?", session.Uuid).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt)
+
 	if err != nil {
 		valid = false
+		fmt.Println(err)
 		return
 	}
 	if session.Id != 0 {
@@ -70,14 +86,10 @@ func (user *User) Create() (err error) {
 	}
 	defer stmt.Close()
 
-	//　todo
-	uuid := createUUID()
-	stmt.Exec(uuid, user.Email, Encrypt(user.Password), user.Nickname, time.Now())
+	stmt.Exec(createUUID(), user.Email, Encrypt(user.Password), user.Nickname, time.Now())
 
-	user_mirror, err := UserByUUID(uuid)
-
-	user.Id = user_mirror.Id
-	user.CreatedAt = user_mirror.CreatedAt
+	err = Db.QueryRow("SELECT LAST_INSERT_ID()").Scan(&user.Id)
+	user.CreatedAt = time.Now()
 
 	return
 }
@@ -140,6 +152,8 @@ func UserByUUID(uuid string) (user User, err error) {
 		Scan(&user.Id, &user.Uuid, &user.Nickname, &user.Email, &user.Password, &user.CreatedAt)
 	return
 }
+
+
 
 func (session *Session) User() (user User, err error) {
 	user = User{}

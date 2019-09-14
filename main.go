@@ -23,6 +23,10 @@ func main(){
 	mux.HandleFunc("/logout", routes.Logout)
 	mux.HandleFunc("/signup_account", routes.SignupAccount)
 
+	//mux.Handle("/login", &routes.TemplateHandler{Filenames: []string{"auth/layout", "layouts/public.navbar", "auth/login"}})
+
+
+
 	mux.HandleFunc("/products/search", routes.ProductSearch)
 	mux.HandleFunc("/products/show", routes.ProductShow)
 
