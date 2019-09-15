@@ -84,7 +84,6 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 }
 
 func SignupAccount(w http.ResponseWriter, r *http.Request) {
-
 	err := r.ParseForm()
 	if err != nil {
 		log.Fatalln(err)

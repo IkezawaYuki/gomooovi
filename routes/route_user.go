@@ -15,8 +15,6 @@ func Mypage(w http.ResponseWriter, r *http.Request){
 		// user に紐づくデータも一緒に渡したい。Mapにすれば良いらしい。
 		user, _ := models.UserByID(strconv.Itoa(ses.UserId))
 
-
-
 		data := map[string]interface{}{"user":user, "dummy": "1"}
 
 		generateHTML(w, data, "users/mypage")

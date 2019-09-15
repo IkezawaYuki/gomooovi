@@ -19,8 +19,9 @@ func ProductShow(w http.ResponseWriter, r *http.Request){
 	vals := r.URL.Query()
 	id := vals.Get("id")
 	product, _ := models.GetProduct(id)
+	review, _ := models.GetReviewAll(id)
 
-	data := map[string]interface{}{"product": product, "dummy": "1"}
+	data := map[string]interface{}{"product": product, "review": review, "dummy": "1"}
 	_, err := session(w, r)
 	if err != nil{
 		generateHTML(w, data, "layouts/layout", "layouts/public.navbar", "products/show")

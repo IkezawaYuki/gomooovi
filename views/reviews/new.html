@@ -31,14 +31,13 @@
                 </ul>
             </div>
         </div>
-
         <form class="new_review" id="new_review" action="/reviews/create?product={{ .Id }}" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="q7cLxYVQpgFn7P5hnmOYKI2nAxVFYKg5bzChnkGrvahk63qAm8toinFn+z33PD8wianfXJwHoFMUHwnNuVOetQ==">
             <div style="margin: 8px 0">
                 <label style="{&quot;margin-right&quot;=>8}" for="review_評価">評価</label>
-                <input placeholder="評価" value="1" max="10" min="1" html="{:class=>&quot;search__query&quot;, :style=>&quot;text-align: right;&quot;}" type="number" name="review[rate]" id="review_rate">
+                <input placeholder="評価" value="1" max="10" min="1" html="{:class=>&quot;search__query&quot;, :style=>&quot;text-align: right;&quot;}" type="number" name="rate" id="review_rate">
             </div>
             <div style="margin: 8px 0">
-                <textarea placeholder="レビューを書いてね！" style="width: 100%;height: 300px;" name="review[review]" id="review_review"></textarea>
+                <textarea placeholder="レビューを書いてね！" style="width: 100%;height: 300px;" name="review" id="review_review"></textarea>
             </div>
             <div class="row">
                 <div class="col10 push1">

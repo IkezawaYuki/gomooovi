@@ -8,7 +8,7 @@ import (
 type Review struct {
 	Id        int       `json:"id"`
 	Rate      int       `json:"rate"`
-	Review   string     `json:"review"`
+	Review    string     `json:"review"`
 	ProductId int       `json:"product_id"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -16,9 +16,9 @@ type Review struct {
 }
 
 
-func GetReviewAll(product_id string)(reviews []Review, err error){
+func GetReviewAll(productId string)(reviews []Review, err error){
 	cmd := fmt.Sprintf(`SELECT id, rate, review, product_id, created_at, updated_at, user_id
-								FROM reviews WHERE product_id = %v`, product_id)
+								FROM reviews WHERE product_id = %v`, productId)
 	rows, err := Db.Query(cmd)
 	if err != nil {
 		fmt.Println(err)
@@ -42,3 +42,18 @@ func GetReviewAll(product_id string)(reviews []Review, err error){
 }
 
 // todo get review by user_id
+
+
+
+
+func (user *User) PostReview(productId string, reviewComment string, rate int)(err error){
+	statement := "insert into reviews (rate, review, product_id, created_at, updated_at, user_id) values (?, ?, ?, ?, ?, ?)"
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(rate, reviewComment, productId, time.Now(), time.Now(), user.Id)
+
+	return
+}
