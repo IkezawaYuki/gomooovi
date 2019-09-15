@@ -89,7 +89,11 @@ func (user *User) Create() (err error) {
 	stmt.Exec(createUUID(), user.Email, Encrypt(user.Password), user.Nickname, time.Now())
 
 	err = Db.QueryRow("SELECT LAST_INSERT_ID()").Scan(&user.Id)
+	if err != nil {
+		panic(err)
+	}
 	user.CreatedAt = time.Now()
+	fmt.Println(user)
 
 	return
 }

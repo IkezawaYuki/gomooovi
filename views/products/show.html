@@ -19,14 +19,14 @@
                     <i class="icon-movie color-gray-light"></i>みんなのレビュー
                 </h2>
             </header>
-            <ul style="padding: 0">
+            <ul style="padding: 0; list-style: none;">
 
                 {{ range .review }}
-                <li style="border-bottom: dotted 1px">
+                <li style="border-bottom: dotted 1px;">
                     <div class="thumbnail__caption">
 
                         <h3 class="text-xsmall text-overflow" title="hoge">
-                            <span><i class="icon-rate-60 text-xxsmall opacity-60" title=""></i></span>hoge<small 2014=""></small>
+                            <span><i class="icon-rate-60 text-xxsmall opacity-60" title=""></i></span>{{ .Author }}<small 2014=""></small>
                         </h3>
                         <p class="text-small">
                             <span class="rating-star"><i class="star-actived rate-{{ .Rate }}0"></i></span>

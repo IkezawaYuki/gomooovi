@@ -44,7 +44,6 @@ func session(w http.ResponseWriter, r *http.Request) (ses models.Session, err er
 	cookie, err := r.Cookie("_cookie")
 	if err == nil {
 		ses = models.Session{Uuid: cookie.Value}
-		fmt.Println(ses)
 		if ok, _ := ses.Check(); !ok {
 			err = errors.New("invalid error")
 		}
