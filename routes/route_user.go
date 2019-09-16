@@ -19,10 +19,8 @@ func Mypage(w http.ResponseWriter, r *http.Request){
 		if err != nil {
 			fmt.Println(err)
 		}
-
 		data := map[string]interface{}{"user":user, "reviewObj": reviewObj}
 		generateHTML(w, data, "users/mypage")
 	}
-
 }
 

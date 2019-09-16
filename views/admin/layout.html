@@ -1,0 +1,31 @@
+{{define "layout"}}
+    <!DOCTYPE html>
+    <html class="pc" lang="ja">
+    <head>
+        <link rel="stylesheet" href="/static/css/application.css">
+        <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+        <title>映画レビューサイト</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+
+    <div id="yjContentsHeader">
+        <nav class="globalnav">
+            <div class="globalnav__menu">
+                <ul class="gmenu">
+                    <li class="logo" style="float: left">
+                        <a href="/">gomooovi</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+        <div class="container">
+
+            {{ template "content" . }}
+
+        </div>
+    </body>
+    </html>
+{{ end }}

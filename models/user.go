@@ -41,8 +41,6 @@ func (user *User) CreateSession() (session Session, err error) {
 
 	err = Db.QueryRow("SELECT LAST_INSERT_ID()").Scan(&session.Id)
 
-	fmt.Println(session)
-
 	return
 }
 

@@ -18,11 +18,10 @@ func main(){
 	mux.HandleFunc("/", routes.Index)
 
 	mux.HandleFunc("/login", routes.Login)
-	mux.HandleFunc("/signup", routes.Signup)
-	mux.HandleFunc("/authenticate", routes.Authenticate)
 	mux.HandleFunc("/logout", routes.Logout)
+	mux.HandleFunc("/signup", routes.Signup)
 	mux.HandleFunc("/signup_account", routes.SignupAccount)
-
+	mux.HandleFunc("/authenticate", routes.Authenticate)
 
 	mux.HandleFunc("/products/search", routes.ProductSearch)
 	mux.HandleFunc("/products/show", routes.ProductShow)
@@ -32,6 +31,8 @@ func main(){
 	mux.HandleFunc("/reviews/create", routes.ReviewCreate)
 
 	mux.HandleFunc("/users/mypage", routes.Mypage)
+
+	mux.HandleFunc("/admin", routes.Admin)
 
 	server := &http.Server{
 		Addr:  config.Address,
