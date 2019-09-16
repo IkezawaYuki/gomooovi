@@ -247,15 +247,15 @@ img {
 
 @font-face {
     font-family: 'bambi';
-    src: url(/bambi-1.0.0.eot?20140712);
-    src: url(/bambi-1.0.0.eot?20140712#iefix) format("embedded-opentype"), url(/assets/bambi-1.0.0-af913e683a89be769a6b0aa63c7aaffd8dbfed2d7b7a20df79aeecbbdbf28e96.ttf?20140712) format("truetype"), url(/bambi-1.0.0.woff?20140712) format("woff"), url(/assets/bambi-1.0.0-e6d156af2c89574bdfe6f5f4735ad5056e8089e2cc7e78a2deaa5aa2a4cd6fe8.svg?20140712#bambi) format("svg");
+    /*src: url(/bambi-1.0.0.eot?20140712);*/
+    /*src: url(/bambi-1.0.0.eot?20140712#iefix) format("embedded-opentype"), url(/assets/bambi-1.0.0-af913e683a89be769a6b0aa63c7aaffd8dbfed2d7b7a20df79aeecbbdbf28e96.ttf?20140712) format("truetype"), url(/bambi-1.0.0.woff?20140712) format("woff"), url(/assets/bambi-1.0.0-e6d156af2c89574bdfe6f5f4735ad5056e8089e2cc7e78a2deaa5aa2a4cd6fe8.svg?20140712#bambi) format("svg");*/
     font-weight: normal;
     font-style: normal;
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
     @font-face {
         font-family: 'bambi';
-        src: url("./font/bambi-1.0.0.svg#bambi") format("svg");
+        /*src: url("./font/bambi-1.0.0.svg#bambi") format("svg");*/
     }
 }
 /* line 4, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
@@ -5282,7 +5282,7 @@ a:hover .thumbnail__figure {
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
 .thumbnail--movies .thumbnail__figure:after {
-    background-image: url(../images/icons/icon-movie-poster.png);
+    /*background-image: url(../images/icons/icon-movie-poster.png);*/
 }
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
@@ -5292,7 +5292,7 @@ a:hover .thumbnail__figure {
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
 .thumbnail--news .thumbnail__figure:after {
-    background-image: url(../images/icons/icon-photo.png);
+    /*background-image: url(../images/icons/icon-photo.png);*/
 }
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
@@ -5312,7 +5312,7 @@ a:hover .thumbnail__figure {
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
 .thumbnail--person .thumbnail__figure:after {
-    background-image: url(../images/icons/icon-person.png);
+    /*background-image: url(../images/icons/icon-person.png);*/
 }
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
@@ -5327,7 +5327,7 @@ a:hover .thumbnail__figure {
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
 .thumbnail--trailer .thumbnail__figure:after {
-    background-image: url(../images/icons/icon-trailer.png);
+    /*background-image: url(../images/icons/icon-trailer.png);*/
 }
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
@@ -5341,7 +5341,7 @@ a:hover .thumbnail__figure {
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
 .thumbnail--theater .thumbnail__figure:after {
-    background-image: url(../images/icons/icon-theater.png);
+    /*background-image: url(../images/icons/icon-theater.png);*/
 }
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
@@ -5521,7 +5521,7 @@ a:hover .thumbnail__figure {
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
 .thumbnail--edit-recommend .thumbnail__figure:after {
-    background-image: url(../images/icons/icon-service.png);
+    /*background-image: url(../images/icons/icon-service.png);*/
 }
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
@@ -5535,7 +5535,7 @@ a:hover .thumbnail__figure {
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
 .thumbnail--present .thumbnail__figure:after {
-    background-image: url(../images/icons/icon-present.png);
+    /*background-image: url(../images/icons/icon-present.png);*/
 }
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
@@ -8079,7 +8079,7 @@ hr.yjSeparation {
 
 /* line 6, /Users/yikezawa/projects/mooovi-exam3/app/assets/css/review_site.scss */
 #contents.ad_gyj {
-    background-image: url("../images/other/grade.png");
+    /*background-image: url("../images/other/grade.png");*/
     background-repeat: repeat-x;
     background-size: auto;
 }

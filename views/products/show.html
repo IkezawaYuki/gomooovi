@@ -5,12 +5,23 @@
         <div class="container">
             <header class="header header--section">
                 <h2 class="text-middle">
-                    <i class="icon-movie color-gray-light"></i>{{ .product.Title}}
+                    <i class="icon-movie color-gray-light"></i>{{ .product.Title }}
                 </h2>
             </header>
             <p style="text-align: center">
                 <img src="{{ .product.ImageUrl }}" alt="No Image">
             </p>
+
+            <p>監督：{{ .product.Director }}</p>
+
+            <p>公開日：{{ .product.OpenDate }}</p>
+            <header class="header header--section">
+                <h2 class="text-middle">
+                    内容
+                </h2>
+            </header>
+            <p>{{ .product.Detail }}</p>
+
             <div style="text-align: right">
                 <a href="/reviews/new?product={{ .product.Id }}">この作品を投稿する</a>
             </div>

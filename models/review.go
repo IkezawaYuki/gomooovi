@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 )
 
@@ -62,7 +63,7 @@ func (user *User) PostReview(productId string, reviewComment string, rate int)(e
 	return
 }
 
-func GetRanking()(rankings []Ranking, err error){
+func GetRanking()(rank []Product, err error){
 	cmd := "SELECT  COUNT(`reviews`.`product_id`) AS count_product_id, `reviews`.`product_id` AS reviews_product_id FROM `reviews` GROUP BY `reviews`.`product_id` ORDER BY count_product_id DESC LIMIT 5"
 	rows, err := Db.Query(cmd)
 	if err != nil {
@@ -70,18 +71,24 @@ func GetRanking()(rankings []Ranking, err error){
 		return nil, err
 	}
 	defer rows.Close()
-
+	var rankings []Ranking
 	for rows.Next(){
 		var ranking Ranking
 		rows.Scan(&ranking.CountProductId, &ranking.ReviewProductId)
 		rankings = append(rankings, ranking)
 	}
-
 	err = rows.Err()
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
 
-	return rankings, err
+	for _, ranking := range rankings{
+		product, err := GetProduct(strconv.Itoa(ranking.ReviewProductId))
+		if err != nil{
+			return nil, err
+		}
+		rank = append(rank, product)
+	}
+	return rank, err
 }

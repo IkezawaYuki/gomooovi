@@ -25,11 +25,16 @@ func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string){
 
 func Index(w http.ResponseWriter, r *http.Request){
 	products, err_ := models.GetProductAll(20)
-	if err_ != nil{
+	if err_ != nil {
 		fmt.Println(err_)
 	}
 
-	data := map[string]interface{}{"products":products, "dummy": "1"}
+	rank, err_ := models.GetRanking()
+	if err_ != nil {
+		fmt.Println(err_)
+	}
+
+	data := map[string]interface{}{"products":products, "rank": rank}
 	_, err := session(w, r)
 	if err != nil{
 		generateHTML(w, data, "layouts/layout", "layouts/public.navbar", "products/index")

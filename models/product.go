@@ -51,3 +51,31 @@ func GetProduct(id string)(Product, error){
 		&product.Detail, &product.OpenDate)
 	return product, err
 }
+
+
+func SearchProduct(word string)([]Product, error){
+	cmd := fmt.Sprintf(`SELECT id, title, image_url, created_at, updated_at, director, detail, open_date 
+								FROM products WHERE title LIKE %v LIMIT 20`, "'%"+word+"%'")
+	rows, err := Db.Query(cmd)
+	if err != nil{
+		log.Println(err)
+		return nil, err
+	}
+	defer rows.Close()
+
+	var products []Product
+	for rows.Next(){
+		var product Product
+		rows.Scan(&product.Id, &product.Title, &product.ImageUrl, &product.CreatedAt, &product.UpdatedAt, &product.Director,
+			&product.Detail, &product.OpenDate)
+		products = append(products, product)
+	}
+
+	err = rows.Err()
+	if err != nil{
+		return nil, err
+	}
+
+	return products, nil
+
+}

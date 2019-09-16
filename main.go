@@ -26,6 +26,7 @@ func main(){
 
 	mux.HandleFunc("/products/search", routes.ProductSearch)
 	mux.HandleFunc("/products/show", routes.ProductShow)
+	mux.HandleFunc("/products/searchApi", routes.ProductSearchApi)
 
 	mux.HandleFunc("/reviews/new", routes.ReviewNew)
 	mux.HandleFunc("/reviews/create", routes.ReviewCreate)
