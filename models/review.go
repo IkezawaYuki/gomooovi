@@ -10,11 +10,23 @@ import (
 type Review struct {
 	Id        int       `json:"id"`
 	Rate      int       `json:"rate"`
-	Review    string     `json:"review"`
+	Review    string    `json:"review"`
 	ProductId int       `json:"product_id"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 	Author    string    `json:"author"`
+}
+
+type ReviewObj struct {
+	Id        int       `json:"id"`
+	Rate      int       `json:"rate"`
+	Review    string    `json:"review"`
+	ProductId int       `json:"product_id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	Author    string    `json:"author"`
+	Title     string    `json:"title"`
+	ImageUrl  string    `json:"image_url"`
 }
 
 type Ranking struct {
@@ -46,8 +58,28 @@ func GetReviewAll(productId string)(reviews []Review, err error){
 	return reviews, nil
 }
 
-// todo get review by user_id
+func (user *User) GetReviewByUser()(reviewObjs []ReviewObj, err error)  {
+	fmt.Println(user)
+	// todo Error 1054: Unknown column 'Aさん' in 'where clause'
+	cmd := fmt.Sprintf(`SELECT reviews_go.id, reviews_go.rate, reviews_go.review, reviews_go.product_id, reviews_go.created_at, reviews_go.updated_at, reviews_go.author, products.title, products.image_url 
+FROM reviews_go JOIN products ON reviews_go.product_id = products.id 
+WHERE reviews_go.author = '%v'`, user.Nickname)
+	rows, err := Db.Query(cmd)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	defer rows.Close()
 
+	for rows.Next(){
+		var reviewObj ReviewObj
+		rows.Scan(&reviewObj.Id, &reviewObj.Rate, &reviewObj.Review, &reviewObj.ProductId, &reviewObj.CreatedAt, &reviewObj.UpdatedAt, &reviewObj.Author, &reviewObj.Title, &reviewObj.ImageUrl)
+		reviewObjs = append(reviewObjs, reviewObj)
+	}
+	fmt.Println(reviewObjs)
+
+	return reviewObjs, nil
+}
 
 
 
