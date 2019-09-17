@@ -11,7 +11,6 @@ import (
 
 
 
-
 // HTMLの生成
 func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string){
 
@@ -19,9 +18,28 @@ func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string){
 	for _, file := range filenames{
 		files = append(files, fmt.Sprintf("views/%s.html", file))
 	}
-	templates := template.Must(template.ParseFiles(files...))
-	templates.ExecuteTemplate(w, "layout", data)
+	fm := template.FuncMap{
+		"add":   models.Add,
+		"rate": models.ReviewAverage,
+	}
+	t := template.New("content").Funcs(fm)
+	t = template.Must(t.ParseFiles(files...))
+	t.ExecuteTemplate(w, "layout", data)
 }
+
+
+
+// HTMLの生成
+//func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string){
+//
+//	var files []string
+//	for _, file := range filenames{
+//		files = append(files, fmt.Sprintf("views/%s.html", file))
+//	}
+//
+//	templates := template.Must(template.ParseFiles(files...))
+//	templates.ExecuteTemplate(w, "layout", data)
+//}
 
 func Index(w http.ResponseWriter, r *http.Request){
 	products, err_ := models.GetProductAll(20)

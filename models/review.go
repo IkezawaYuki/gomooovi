@@ -124,3 +124,4 @@ func GetRanking()(rank []Product, err error){
 	}
 	return rank, err
 }
+

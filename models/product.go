@@ -1,8 +1,10 @@
 package models
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
+	"strings"
 	"time"
 )
 
@@ -15,6 +17,17 @@ type Product struct {
 	Director  string    `json:"director"`
 	Detail    string    `json:"detail"`
 	OpenDate  string    `json:"open_date"`
+}
+
+func ReviewAverage(productId int) string{
+	var char string
+	cmd := fmt.Sprintf("SELECT AVG(`reviews`.`rate`) FROM `reviews` WHERE `reviews`.`product_id` = %v", productId)
+	err := Db.QueryRow(cmd).Scan(&char)
+	if err != nil && err != sql.ErrNoRows{
+		return "0"
+	}
+	char = strings.Split(char, ".")[0]
+	return char
 }
 
 
@@ -77,5 +90,8 @@ func SearchProduct(word string)([]Product, error){
 	}
 
 	return products, nil
+}
 
+func Add(i int) int{
+	return i + 1
 }
