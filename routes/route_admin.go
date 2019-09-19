@@ -7,9 +7,12 @@ import (
 )
 
 func Admin(w http.ResponseWriter, r *http.Request){
-	products, err_ := models.GetProductAll(20)
-	if err_ != nil {
-		fmt.Println(err_)
+	vals := r.URL.Query()
+	page := vals.Get("page")
+	fmt.Println(page)
+	products, err := models.GetProductAll(20)
+	if err != nil {
+		fmt.Println(err)
 	}
 
 	data := map[string]interface{}{"products":products}
