@@ -33,6 +33,7 @@ func main(){
 	mux.HandleFunc("/users/mypage", routes.Mypage)
 
 	mux.HandleFunc("/admin", routes.Admin)
+	mux.HandleFunc("/admin/save", routes.SaveProduct)
 
 	server := &http.Server{
 		Addr:  config.Address,
