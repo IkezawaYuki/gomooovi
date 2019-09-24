@@ -31,9 +31,9 @@ func ReviewAverage(productId int) string{
 }
 
 
-func GetProductAll(limit int)([]Product, error){
+func GetProductAll(start int)([]Product, error){
 	cmd := fmt.Sprintf(`SELECT id, title, image_url, created_at, updated_at, director, detail, open_date 
-								FROM products LIMIT %v`, limit)
+								FROM products LIMIT %v, 20`, start)
 	rows, err := Db.Query(cmd)
 	if err != nil{
 		log.Println(err)
@@ -91,6 +91,18 @@ func SearchProduct(word string)([]Product, error){
 
 	return products, nil
 }
+
+func (p *Product) RegisterProduct()(err error){
+	statement := "insert into products (title, image_url, created_at, updated_at, director, detail, open_date) values (?, ?, ?, ?, ?, ? ,?)"
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(p.Title, p.ImageUrl, p.CreatedAt, p.UpdatedAt, p.Director, p.Detail, p.OpenDate)
+	return
+}
+
 
 func Add(i int) int{
 	return i + 1

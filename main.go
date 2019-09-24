@@ -34,6 +34,7 @@ func main(){
 
 	mux.HandleFunc("/admin", routes.Admin)
 	mux.HandleFunc("/admin/save", routes.SaveProduct)
+	mux.HandleFunc("/admin/delete", routes.DeleteProduct)
 
 	server := &http.Server{
 		Addr:  config.Address,

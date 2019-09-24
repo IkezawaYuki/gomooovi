@@ -6,6 +6,7 @@ import (
 	"gomooovi/models"
 	"html/template"
 	"net/http"
+	"strconv"
 )
 
 
@@ -29,20 +30,16 @@ func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string){
 
 
 
-// HTMLの生成
-//func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string){
-//
-//	var files []string
-//	for _, file := range filenames{
-//		files = append(files, fmt.Sprintf("views/%s.html", file))
-//	}
-//
-//	templates := template.Must(template.ParseFiles(files...))
-//	templates.ExecuteTemplate(w, "layout", data)
-//}
 
 func Index(w http.ResponseWriter, r *http.Request){
-	products, err_ := models.GetProductAll(20)
+
+	vals := r.URL.Query()
+	page := vals.Get("page")
+	if page == ""{
+		page = "1"
+	}
+	start, _ := strconv.Atoi(page)
+	products, err_ := models.GetProductAll(start * 20-20)
 	if err_ != nil {
 		fmt.Println(err_)
 	}

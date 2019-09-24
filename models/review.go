@@ -59,8 +59,6 @@ func GetReviewAll(productId string)(reviews []Review, err error){
 }
 
 func (user *User) GetReviewByUser()(reviewObjs []ReviewObj, err error)  {
-	fmt.Println(user)
-	// todo Error 1054: Unknown column 'Aさん' in 'where clause'
 	cmd := fmt.Sprintf(`SELECT reviews_go.id, reviews_go.rate, reviews_go.review, reviews_go.product_id, reviews_go.created_at, reviews_go.updated_at, reviews_go.author, products.title, products.image_url 
 FROM reviews_go JOIN products ON reviews_go.product_id = products.id 
 WHERE reviews_go.author = '%v'`, user.Nickname)

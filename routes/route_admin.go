@@ -4,13 +4,17 @@ import (
 	"fmt"
 	"gomooovi/models"
 	"net/http"
+	"strconv"
 )
 
 func Admin(w http.ResponseWriter, r *http.Request){
 	vals := r.URL.Query()
 	page := vals.Get("page")
-	fmt.Println(page)
-	products, err := models.GetProductAll(20)
+	if page == ""{
+		page = "1"
+	}
+	start, _ := strconv.Atoi(page)
+	products, err := models.GetProductAll(start * 20-20)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -19,21 +23,3 @@ func Admin(w http.ResponseWriter, r *http.Request){
 	generateHTML(w, data, "admin/layout", "admin/product")
 }
 
-func SaveProduct(w http.ResponseWriter, r *http.Request){
-	err := r.ParseForm()
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	title := r.PostFormValue("title")
-	detail := r.PostFormValue("detail")
-	director := r.PostFormValue("director")
-	opendate := r.PostFormValue("opendate")
-
-	fmt.Println(title)
-	fmt.Println(detail)
-	fmt.Println(director)
-	fmt.Println(opendate)
-
-	http.Redirect(w, r, "/admin", 302)
-}
