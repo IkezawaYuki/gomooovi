@@ -65,6 +65,11 @@ func GetProduct(id string)(Product, error){
 	return product, err
 }
 
+func DeleteProduct(id string)(err error){
+	_, err = Db.Exec("delete from products where id = ?", id)
+	return
+}
+
 
 func SearchProduct(word string)([]Product, error){
 	cmd := fmt.Sprintf(`SELECT id, title, image_url, created_at, updated_at, director, detail, open_date 

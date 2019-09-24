@@ -131,7 +131,10 @@ func DeleteProduct(w http.ResponseWriter, r *http.Request){
 	}
 	productId := jsonBody["product_id"]
 
-	fmt.Println(productId)
+	err = models.DeleteProduct(productId)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	http.Redirect(w, r, "/admin", 302)
 }

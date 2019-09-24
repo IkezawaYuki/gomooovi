@@ -57,7 +57,6 @@ func (session *Session) Check() (valid bool, err error) {
 
 	if err != nil {
 		valid = false
-		fmt.Println(err)
 		return
 	}
 	if session.Id != 0 {
