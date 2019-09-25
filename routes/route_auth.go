@@ -1,36 +1,33 @@
 package routes
 
 import (
-	"fmt"
 	"gomooovi/models"
-	"html/template"
 	"log"
 	"net/http"
-	"sync"
 )
 
 type AuthHandler struct {
 	next http.Handler
 }
 
-type TemplateHandler struct {
-	once sync.Once
-	Filenames []string
-	templ *template.Template
-}
-
-func (t *TemplateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
-	var files []string
-
-	for _, file := range t.Filenames{
-		files = append(files, fmt.Sprintf("views/%s.html", file))
-	}
-
-	t.once.Do(func() {
-		t.templ = template.Must(template.ParseFiles(files...))
-	})
-	t.templ.Execute(w, nil)
-}
+//type TemplateHandler struct {
+//	once sync.Once
+//	Filenames []string
+//	templ *template.Template
+//}
+//
+//func (t *TemplateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
+//	var files []string
+//
+//	for _, file := range t.Filenames{
+//		files = append(files, fmt.Sprintf("views/%s.html", file))
+//	}
+//
+//	t.once.Do(func() {
+//		t.templ = template.Must(template.ParseFiles(files...))
+//	})
+//	t.templ.Execute(w, nil)
+//}
 
 
 func (h *AuthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
@@ -99,6 +96,8 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/login", 302)
 }
 
+
+
 func Logout(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("_cookie")
 	if err != http.ErrNoCookie {
@@ -107,3 +106,4 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	}
 	http.Redirect(w, r, "/", 302)
 }
+

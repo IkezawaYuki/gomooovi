@@ -36,6 +36,12 @@ func main(){
 	mux.HandleFunc("/admin/save", routes.SaveProduct)
 	mux.HandleFunc("/admin/delete", routes.DeleteProduct)
 
+	mux.HandleFunc("/admin/authenticate", routes.AdminAuthenticate)
+	mux.HandleFunc("/admin/login", routes.AdminLogin)
+	mux.HandleFunc("/admin/logout", routes.AdminLogout)
+	mux.HandleFunc("/admin/signup", routes.AdminSignup)
+	mux.HandleFunc("/admin/signup_account", routes.AdminSignupAccount)
+
 	server := &http.Server{
 		Addr:  config.Address,
 		Handler:mux,

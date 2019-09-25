@@ -1,0 +1,65 @@
+{{ define "content" }}
+
+    <h4>映画情報の追加</h4>
+    <div>
+        <form action="/admin/save" method="post">
+            <div class="form-group">
+                <label for="formGroupExampleInput">メールアドレス</label>
+                <input type="text" class="form-control" name="email" placeholder="タイトル">
+            </div>
+
+            <div class="form-group">
+                <label for="formGroupExampleInput">パスワード</label>
+                <input type="text" class="form-control" name="password" placeholder="画像URL">
+            </div>
+
+            <div class="form-group">
+                <label for="formGroupExampleInput">ニックネーム</label>
+                <input type="text" class="form-control" name="nickname" placeholder="内容">
+            </div>
+
+            <button class="btn btn-primary">登録</button>
+        </form>
+    </div>
+
+    <table class="table table-sm">
+        <thead>
+        <tr>
+            <th>ID.</th>
+            <th>ユニークID</th>
+            <th>メールアドレス</th>
+            <th>パスワード</th>
+            <th>ニックネーム</th>
+            <th>作成日</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{ range .admin }}
+            <tr>
+                <th scope="row">{{ .Id }}</th>
+                <td>{{ .Uuid }}</td>
+                <td>{{ .Email}}</td>
+                <td>{{ .Password }}</td>
+                <td>{{ .Nickname }}</td>
+                <td>{{ .CreatedAt }}</td>
+                <td><button type="button" class="delete_button" value="{{.Id}}"><i class="material-icons">delete</i></button></td>
+            </tr>
+        {{ end }}
+
+        {{ range .users }}
+            <tr>
+                <th scope="row">{{ .Id }}</th>
+                <td>{{ .Uuid }}</td>
+                <td>{{ .Email}}</td>
+                <td>{{ .Password }}</td>
+                <td>{{ .Nickname }}</td>
+                <td>{{ .CreatedAt }}</td>
+                <td><button type="button" class="delete_button" value="{{.Id}}"><i class="material-icons">delete</i></button></td>
+            </tr>
+        {{ end }}
+
+        </tbody>
+    </table>
+
+{{ end }}

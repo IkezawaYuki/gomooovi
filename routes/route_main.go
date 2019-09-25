@@ -10,8 +10,6 @@ import (
 )
 
 
-
-
 // HTMLの生成
 func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string){
 
@@ -27,8 +25,6 @@ func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string){
 	t = template.Must(t.ParseFiles(files...))
 	t.ExecuteTemplate(w, "layout", data)
 }
-
-
 
 
 func Index(w http.ResponseWriter, r *http.Request){
@@ -57,7 +53,6 @@ func Index(w http.ResponseWriter, r *http.Request){
 		generateHTML(w, data, "layouts/layout", "layouts/private.navbar", "products/index")
 	}
 }
-
 
 
 func session(w http.ResponseWriter, r *http.Request) (ses models.Session, err error) {

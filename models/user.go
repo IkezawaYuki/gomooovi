@@ -14,6 +14,7 @@ type User struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+
 type Session struct {
 	Id        int       `json:"id"`
 	Uuid      string    `json:"uuid"`
@@ -44,7 +45,7 @@ func (user *User) CreateSession() (session Session, err error) {
 	return
 }
 
-//&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt
+
 
 func (user *User) Session() (session Session, err error) {
 	session = Session{}
@@ -124,21 +125,24 @@ func (user *User) DeleteAll() (err error) {
 }
 
 func Users() (users []User, err error) {
-	statement := "select id, uuid, nickname, email, password, created_at from users_go"
-	rows, err := Db.Query(statement)
+	rows, err := Db.Query("SELECT id, uuid, nickname, email, password, created_at FROM users_go")
+	defer rows.Close()
 	if err != nil {
-		return
+		panic(err.Error())
 	}
+
 	for rows.Next() {
-		user := User{}
-		err = rows.Scan(&user.Id, &user.Uuid, &user.Email, &user.Password, &user.CreatedAt)
+		var person User //構造体Person型の変数personを定義
+		err := rows.Scan(&person.Id, &person.Uuid, &person.Nickname, &person.Email, &person.Password, &person.CreatedAt)
+
 		if err != nil {
-			return
+			panic(err.Error())
 		}
-		users = append(users, user)
+		users = append(users, person)
 	}
 	return
 }
+
 
 func UserByEmail(email string) (user User, err error) {
 	user = User{}
