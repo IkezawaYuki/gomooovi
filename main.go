@@ -39,7 +39,7 @@ func main(){
 	mux.HandleFunc("/admin/authenticate", routes.AdminAuthenticate)
 	mux.HandleFunc("/admin/login", routes.AdminLogin)
 	mux.HandleFunc("/admin/logout", routes.AdminLogout)
-	mux.HandleFunc("/admin/signup", routes.AdminSignup)
+	mux.HandleFunc("/admin/users", routes.AdminUsers)
 	mux.HandleFunc("/admin/signup_account", routes.AdminSignupAccount)
 
 	server := &http.Server{

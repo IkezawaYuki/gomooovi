@@ -26,10 +26,10 @@ func Admin(w http.ResponseWriter, r *http.Request){
 
 
 func AdminLogin(writer http.ResponseWriter, request *http.Request) {
-	generateHTML(writer, nil, "auth/layout", "layouts/public.navbar", "auth/login.admin")
+	generateHTML(writer, nil, "auth/layout", "layouts/public.navbar", "admin/login")
 }
 
-func AdminSignup(writer http.ResponseWriter, request *http.Request) {
+func AdminUsers(writer http.ResponseWriter, request *http.Request) {
 	users, err := models.Users()
 	if err != nil {
 		fmt.Println(err)
@@ -42,7 +42,7 @@ func AdminSignup(writer http.ResponseWriter, request *http.Request) {
 
 	fmt.Println(users)
 	fmt.Println(admin)
-	generateHTML(writer, data, "auth/layout", "layouts/public.navbar", "auth/signup.admin")
+	generateHTML(writer, data, "admin/layout", "layouts/public.navbar", "admin/users")
 }
 
 func AdminAuthenticate(w http.ResponseWriter, r *http.Request) {
@@ -64,10 +64,9 @@ func AdminAuthenticate(w http.ResponseWriter, r *http.Request) {
 			HttpOnly: true,
 		}
 		http.SetCookie(w, &cookie)
-		http.Redirect(w, r, "/admin/", 302)
-
+		http.Redirect(w, r, "/admin", 302)
 	} else {
-		http.Redirect(w, r, "/admin/login.admin", 302)
+		http.Redirect(w, r, "/admin/login", 302)
 	}
 }
 
@@ -84,7 +83,7 @@ func AdminSignupAccount(w http.ResponseWriter, r *http.Request) {
 	if err = user.Create(); err != nil {
 		panic(err)
 	}
-	http.Redirect(w, r, "/login", 302)
+	http.Redirect(w, r, "/admin/login", 302)
 }
 
 
