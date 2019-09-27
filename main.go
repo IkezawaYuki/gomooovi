@@ -33,8 +33,11 @@ func main(){
 	mux.HandleFunc("/users/mypage", routes.Mypage)
 
 	mux.HandleFunc("/admin", routes.Admin)
-	mux.HandleFunc("/admin/save", routes.SaveProduct)
-	mux.HandleFunc("/admin/delete", routes.DeleteProduct)
+	mux.HandleFunc("/admin/product/save", routes.SaveProduct)
+	mux.HandleFunc("/admin/user/save", routes.SaveUser)
+	mux.HandleFunc("/admin/product/delete", routes.DeleteProduct)
+	//mux.HandleFunc("/admin/admin_user/delete", routes.)
+	//mux.HandleFunc("/admin/user/delete", routes.)
 
 	mux.HandleFunc("/admin/authenticate", routes.AdminAuthenticate)
 	mux.HandleFunc("/admin/login", routes.AdminLogin)

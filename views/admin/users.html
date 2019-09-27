@@ -2,20 +2,20 @@
 
     <h4>映画情報の追加</h4>
     <div>
-        <form action="/admin/save" method="post">
+        <form action="/admin/user/save" method="post">
             <div class="form-group">
                 <label for="formGroupExampleInput">メールアドレス</label>
-                <input type="text" class="form-control" name="email" placeholder="タイトル">
+                <input type="text" class="form-control" name="email" placeholder="メールアドレス">
             </div>
 
             <div class="form-group">
                 <label for="formGroupExampleInput">パスワード</label>
-                <input type="text" class="form-control" name="password" placeholder="画像URL">
+                <input type="text" class="form-control" name="password" placeholder="パスワード">
             </div>
 
             <div class="form-group">
                 <label for="formGroupExampleInput">ニックネーム</label>
-                <input type="text" class="form-control" name="nickname" placeholder="内容">
+                <input type="text" class="form-control" name="nickname" placeholder="ニックネーム（登録名）">
             </div>
 
             <button class="btn btn-primary">登録</button>
@@ -26,6 +26,7 @@
         <thead>
         <tr>
             <th>ID.</th>
+            <th>区分</th>
             <th>ユニークID</th>
             <th>メールアドレス</th>
             <th>パスワード</th>
@@ -38,24 +39,26 @@
         {{ range .admin }}
             <tr>
                 <th scope="row">{{ .Id }}</th>
+                <td>アドミン</td>
                 <td>{{ .Uuid }}</td>
                 <td>{{ .Email}}</td>
                 <td>{{ .Password }}</td>
                 <td>{{ .Nickname }}</td>
                 <td>{{ .CreatedAt }}</td>
-                <td><button type="button" class="delete_button" value="{{.Id}}"><i class="material-icons">delete</i></button></td>
+                <td><button type="button" class="delete_button_admin_user" value="{{.Id}}"><i class="material-icons">delete</i></button></td>
             </tr>
         {{ end }}
 
         {{ range .users }}
             <tr>
                 <th scope="row">{{ .Id }}</th>
+                <td>一般</td>
                 <td>{{ .Uuid }}</td>
                 <td>{{ .Email}}</td>
                 <td>{{ .Password }}</td>
                 <td>{{ .Nickname }}</td>
                 <td>{{ .CreatedAt }}</td>
-                <td><button type="button" class="delete_button" value="{{.Id}}"><i class="material-icons">delete</i></button></td>
+                <td><button type="button" class="delete_button_user" value="{{.Id}}"><i class="material-icons">delete</i></button></td>
             </tr>
         {{ end }}
 

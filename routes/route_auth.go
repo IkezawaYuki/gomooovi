@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"gomooovi/models"
 	"log"
 	"net/http"
@@ -52,6 +53,24 @@ func Login(writer http.ResponseWriter, request *http.Request) {
 
 func Signup(writer http.ResponseWriter, request *http.Request) {
 	generateHTML(writer, nil, "auth/layout", "layouts/public.navbar", "auth/signup")
+}
+
+func SaveUser(w http.ResponseWriter, r *http.Request){
+	err := r.ParseForm()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	user := models.User{
+		Nickname: r.PostFormValue("nickname"),
+		Email:    r.PostFormValue("email"),
+		Password: r.PostFormValue("password"),
+	}
+	if err = user.Create(); err != nil {
+		panic(err)
+	}
+
+	http.Redirect(w, r, "/admin/users", 302)
 }
 
 func Authenticate(w http.ResponseWriter, r *http.Request) {
